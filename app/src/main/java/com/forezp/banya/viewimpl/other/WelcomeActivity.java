@@ -5,11 +5,13 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
 import android.app.Activity;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.widget.ImageView;
 
 import com.forezp.banya.R;
+import com.forezp.banya.WelcomeBinding;
 import com.forezp.banya.viewimpl.MainActivity;
 
 import java.util.Random;
@@ -28,14 +30,13 @@ import rx.functions.Action1;
  */
 public class WelcomeActivity extends Activity {
 
-    @BindView(R.id.iv_entry)
-    ImageView mSplashImage;
     @BindInt(R.integer.animationTime)
     int mAnimationTime;
     @BindArray(R.array.scaleXValue)
     String[] mScaleXValue;
     @BindArray(R.array.scaleYValue)
     String[] mScaleYValue;
+    WelcomeBinding mWelcomeBinding;
 
     private static final int[] IMAGES = {
             R.drawable.ic_screen_default,
@@ -61,11 +62,11 @@ public class WelcomeActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_entry);
+        mWelcomeBinding = DataBindingUtil.setContentView(this, R.layout.activity_welcome);
         ButterKnife.bind(this);
 
         Random random = new Random(SystemClock.elapsedRealtime());
-        mSplashImage.setImageResource(IMAGES[random.nextInt(IMAGES.length)]);
+        mWelcomeBinding.setResImgId(IMAGES[random.nextInt(IMAGES.length)]);
 
         Observable.timer(1000, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
@@ -81,7 +82,7 @@ public class WelcomeActivity extends Activity {
         PropertyValuesHolder scaleXHolder = PropertyValuesHolder.ofFloat("scaleX", Float.valueOf(mScaleXValue[0]), Float.valueOf(mScaleXValue[1]));
         PropertyValuesHolder scaleYHolder = PropertyValuesHolder.ofFloat("scaleY", Float.valueOf(mScaleYValue[0]), Float.valueOf(mScaleYValue[1]));
 
-        ObjectAnimator objAnimator = ObjectAnimator.ofPropertyValuesHolder(mSplashImage, scaleXHolder, scaleYHolder);
+        ObjectAnimator objAnimator = ObjectAnimator.ofPropertyValuesHolder(mWelcomeBinding.splashImg, scaleXHolder, scaleYHolder);
         objAnimator.setDuration(mAnimationTime);
         objAnimator.addListener(new AnimatorListenerAdapter() {
 
