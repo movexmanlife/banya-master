@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 
 import com.forezp.banya.R;
 import com.forezp.banya.adapter.MusicViewpagerAdapter;
-import com.forezp.banya.api.MusicApiUtils;
+import com.forezp.banya.utils.MusicSourceUtil;
 import com.forezp.banya.base.BaseFragment;
 import com.forezp.banya.utils.ThemeUtils;
 
@@ -64,7 +64,7 @@ public class MusicFragment extends BaseFragment implements ViewPager.OnPageChang
 
     private void initViews(){
 
-        mTitles = MusicApiUtils.Music_Titles;
+        mTitles = MusicSourceUtil.MUSIC_TITLES;
 
         // 初始化ViewPager的适配器，并设置给它
         mViewPagerAdapter = new MusicViewpagerAdapter(getChildFragmentManager(), mTitles);

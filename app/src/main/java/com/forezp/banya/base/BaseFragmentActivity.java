@@ -13,7 +13,7 @@ public  abstract  class BaseFragmentActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ActivityCollector.getInstance().addActivity(this);
+        ActivityManager.getInstance().addActivity(this);
         actName=setActName();
 
 
@@ -53,7 +53,7 @@ public  abstract  class BaseFragmentActivity extends AppCompatActivity {
     protected void onDestroy() {
 
 
-        ActivityCollector.getInstance().removeActivity(this);
+        ActivityManager.getInstance().removeActivity(this);
         super.onDestroy();
 
     }

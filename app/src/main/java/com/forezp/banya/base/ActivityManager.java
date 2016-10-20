@@ -8,12 +8,12 @@ import java.util.Stack;
 /**
  *
  */
-public class ActivityCollector {
+public class ActivityManager {
 
 
     private static Stack<Activity> activityStack;
-    private static ActivityCollector instance;
-    private ActivityCollector() {
+    private static ActivityManager instance;
+    private ActivityManager() {
 
     }
 
@@ -26,9 +26,9 @@ public class ActivityCollector {
     /**
      * 单一实例
      */
-    public static ActivityCollector getInstance() {
+    public static ActivityManager getInstance() {
         if (instance == null) {
-            instance = new ActivityCollector();
+            instance = new ActivityManager();
         }
         return instance;
     }
@@ -133,13 +133,13 @@ public class ActivityCollector {
      * 以前的Activity..
      */
 
-//    public static ActivityCollector instance = new ActivityCollector();
+//    public static ActivityManager instance = new ActivityManager();
 //    private List<Activity> mLists = new ArrayList<Activity>();
 //
-//    private ActivityCollector() {
+//    private ActivityManager() {
 //    }
 //
-//    public synchronized static ActivityCollector getInstance() {
+//    public synchronized static ActivityManager getInstance() {
 //
 //        return instance;
 //    }

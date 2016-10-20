@@ -23,20 +23,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class ApiRetrofit {
 
-    public DoubanApi doubanApiService;
+    public DoubanService mDoubanService;
 
     public static final String DOUBAN_BASE_URL = "https://api.douban.com/";
 
-
-
-
-
-    public DoubanApi getDoubanApiService() {
-        return doubanApiService;
+    public DoubanService getDoubanService() {
+        return mDoubanService;
     }
-
-
-
 
     ApiRetrofit() {
         //cache url
@@ -57,7 +50,7 @@ public class ApiRetrofit {
                 .build();
 
 
-        doubanApiService = retrofit_zhihu.create(DoubanApi.class);
+        mDoubanService = retrofit_zhihu.create(DoubanService.class);
 
     }
 

@@ -26,7 +26,7 @@ public class DoubanBookPresenter extends BasePresenter {
      */
     public void searchBookByTag(IGetBookView iGetBookView,String TAG ,boolean isLoadMore){
 
-        doubanApi.searchBookByTag(TAG)
+        DOUBAN_SERVICE.searchBookByTag(TAG)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(bookRoot -> {
@@ -42,7 +42,7 @@ public class DoubanBookPresenter extends BasePresenter {
      */
     public void getBookById(IGetBookDetailView iGetBookView, String id ){
 
-        doubanApi.getBookDetail(id)
+        DOUBAN_SERVICE.getBookDetail(id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(bookRoot -> {

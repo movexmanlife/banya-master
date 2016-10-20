@@ -17,7 +17,7 @@ import rx.Observable;
 /**
  * Created by Administrator on 2016/9/21 0021.
  */
-public interface DoubanApi {
+public interface DoubanService {
     /**
      * 热映中
      * @return

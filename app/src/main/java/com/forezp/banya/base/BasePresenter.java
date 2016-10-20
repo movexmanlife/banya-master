@@ -3,7 +3,7 @@ package com.forezp.banya.base;
 import android.content.Context;
 
 import com.forezp.banya.api.ApiFactory;
-import com.forezp.banya.api.DoubanApi;
+import com.forezp.banya.api.DoubanService;
 
 
 /**
@@ -14,7 +14,7 @@ import com.forezp.banya.api.DoubanApi;
 public abstract class BasePresenter {
     // private Myhttp myHttp;
     public Context mContext;
-    public static final DoubanApi doubanApi = ApiFactory.getDoubanApiSingleton();
+    public static final DoubanService DOUBAN_SERVICE = ApiFactory.getDoubanServiceInstance();
 
 
     public BasePresenter(Context context) {

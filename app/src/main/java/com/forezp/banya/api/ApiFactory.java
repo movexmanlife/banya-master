@@ -6,22 +6,18 @@ package com.forezp.banya.api;
  */
 public class ApiFactory {
 
-
-    protected static final Object monitor = new Object();
-    static DoubanApi doubanApiSingleton = null;
-
+    static DoubanService mDoubanService = null;
 
     //return Singleton
-    public static DoubanApi getDoubanApiSingleton() {
-        synchronized (monitor) {
-            if (doubanApiSingleton == null) {
-                doubanApiSingleton = new ApiRetrofit().getDoubanApiService();
+    public static DoubanService getDoubanServiceInstance() {
+        if (mDoubanService == null) {
+            synchronized (ApiFactory.class) {
+                if (mDoubanService == null) {
+                    mDoubanService = new ApiRetrofit().getDoubanService();
+                }
             }
-            return doubanApiSingleton;
         }
+
+        return mDoubanService;
     }
-
-
-
-
 }

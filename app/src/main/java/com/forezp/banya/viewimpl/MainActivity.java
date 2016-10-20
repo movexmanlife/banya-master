@@ -1,6 +1,8 @@
 package com.forezp.banya.viewimpl;
 
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.AppBarLayout;
@@ -23,7 +25,7 @@ import android.widget.RadioGroup;
 
 import com.forezp.banya.R;
 import com.forezp.banya.adapter.ThemeColorAdapter;
-import com.forezp.banya.base.ActivityCollector;
+import com.forezp.banya.base.ActivityManager;
 import com.forezp.banya.base.BaseActivity;
 import com.forezp.banya.base.EasyRecyclerViewAdapter;
 import com.forezp.banya.bean.home.ThemeColor;
@@ -66,6 +68,12 @@ public class MainActivity extends BaseActivity implements IgetTop250View{
     private MusicFragment musicFragment;
     private List<Fragment> listFragment;
     private int currentFragment;
+
+    public static void start(Context context) {
+        Intent intent = new Intent(context, MainActivity.class);
+        context.startActivity(intent);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -238,7 +246,7 @@ public class MainActivity extends BaseActivity implements IgetTop250View{
                                         // finish();
                                         new Handler().postDelayed(new Runnable() {
                                             public void run() {
-                                                ActivityCollector.getInstance().refreshAllActivity();
+                                                ActivityManager.getInstance().refreshAllActivity();
                                                 // closeHandler.sendEmptyMessageDelayed(MSG_CLOSE_ACTIVITY, 300);
                                             }
                                         }, 100);

@@ -28,5 +28,15 @@
     <item>http://d.hiphotos.baidu.com/zhidao/pic/item/d1a20cf431adcbef85a0349fadaf2edda2cc9f97.jpg</item>
   </string-array>
 
+  <!-- 此处只能放置数字，因要将String转化为float类型 -->
+  <string-array name="scaleXValue">
+    <item>1</item>
+    <item>1.13</item>
+  </string-array>
+  <!-- 此处只能放置数字，因要将String转化为float类型 -->
+  <string-array name="scaleYValue">
+    <item>1</item>
+    <item>1.13</item>
+  </string-array>
 </resources>
 

@@ -26,7 +26,7 @@ public class DoubanMusicPresenter extends BasePresenter {
      */
     public void searchMusicByTag(IGetMusicByTagView iGetMusicByTagView, String TAG , boolean isLoadMore){
 
-        doubanApi.searchMusicByTag(TAG)
+        DOUBAN_SERVICE.searchMusicByTag(TAG)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(musicRoot -> {
@@ -59,7 +59,7 @@ public class DoubanMusicPresenter extends BasePresenter {
      */
     public void getMusicById(IGetMusicById iGetMusicById, String id ){
 
-        doubanApi.getMusicDetail(id)
+        DOUBAN_SERVICE.getMusicDetail(id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(music -> {

@@ -13,8 +13,8 @@ import android.view.ViewGroup;
 import com.forezp.banya.Presenter.DoubanMusicPresenter;
 import com.forezp.banya.R;
 import com.forezp.banya.adapter.MusicAdapter;
-import com.forezp.banya.api.BookApiUtils;
-import com.forezp.banya.api.MusicApiUtils;
+import com.forezp.banya.utils.BookSourceUtil;
+import com.forezp.banya.utils.MusicSourceUtil;
 import com.forezp.banya.base.BaseFragment;
 import com.forezp.banya.bean.music.MusicRoot;
 import com.forezp.banya.bean.music.Musics;
@@ -71,13 +71,13 @@ public class MusicContentFragment extends BaseFragment implements SwipeRefreshLa
             position=args.getInt("position");
         }
         musicList=new ArrayList<>();
-        String[] strTags= MusicApiUtils.getApiTag(position);
+        String[] strTags= MusicSourceUtil.getApiTag(position);
         listTag= Arrays.asList(strTags);
         scrollRecycleView();
         idSwiperefreshlayout.setColorSchemeColors(ThemeUtils.getThemeColor());
         idSwiperefreshlayout.setOnRefreshListener(this);
         doubanMusicPresenter=new DoubanMusicPresenter(getActivity());
-        String tag=BookApiUtils.getRandomTAG(listTag);
+        String tag= BookSourceUtil.getRandomTag(listTag);
         doubanMusicPresenter.searchMusicByTag(this,tag,false);
         adapter=new MusicAdapter(getActivity());
         mLayoutManager = new LinearLayoutManager(getContext());
@@ -112,7 +112,7 @@ public class MusicContentFragment extends BaseFragment implements SwipeRefreshLa
                         new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                String tag=BookApiUtils.getRandomTAG(listTag);
+                                String tag= BookSourceUtil.getRandomTag(listTag);
                                 doubanMusicPresenter.searchMusicByTag(MusicContentFragment.this,tag,true);
                             }
                         },1000) ;
@@ -154,7 +154,7 @@ public class MusicContentFragment extends BaseFragment implements SwipeRefreshLa
 
     @Override
     public void onRefresh() {
-        String tag=BookApiUtils.getRandomTAG(listTag);
+        String tag= BookSourceUtil.getRandomTag(listTag);
         doubanMusicPresenter.searchMusicByTag(this,tag,false);
         idSwiperefreshlayout.postDelayed(new Runnable() {
             @Override

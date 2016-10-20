@@ -32,7 +32,7 @@ public class DoubanFilmPresenter extends BasePresenter{
      */
     public void getFilmLive(IGetFilmLiveView iGetFilmLiveView){
 
-        doubanApi.getLiveFilm()
+        DOUBAN_SERVICE.getLiveFilm()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(filmLive -> {
@@ -58,7 +58,7 @@ public class DoubanFilmPresenter extends BasePresenter{
      * 获取
      */
     public void getFilmDetail(IGetFilmDetail iGetFilmDetail,String id){
-        doubanApi.getFilmDetail(id)
+        DOUBAN_SERVICE.getFilmDetail(id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(filmDetail -> {
@@ -85,7 +85,7 @@ public class DoubanFilmPresenter extends BasePresenter{
      */
 
     public void getTop250(IgetTop250View igetTop250View,int start, int count,boolean isLoadMore){
-        doubanApi.getTop250(start,count)
+        DOUBAN_SERVICE.getTop250(start,count)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(root -> {
@@ -111,7 +111,7 @@ public class DoubanFilmPresenter extends BasePresenter{
      */
 
     public void getUsBox(IGetUsBoxView iGetUsBoxView){
-        doubanApi.getUsBox()
+        DOUBAN_SERVICE.getUsBox()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(root -> {

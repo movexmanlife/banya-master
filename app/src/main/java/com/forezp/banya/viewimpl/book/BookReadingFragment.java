@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import com.forezp.banya.Presenter.DoubanBookPresenter;
 import com.forezp.banya.R;
 import com.forezp.banya.adapter.BookReadingAdapter;
-import com.forezp.banya.api.BookApiUtils;
+import com.forezp.banya.utils.BookSourceUtil;
 import com.forezp.banya.base.BaseFragment;
 import com.forezp.banya.bean.book.BookRoot;
 import com.forezp.banya.bean.book.Books;
@@ -72,13 +72,13 @@ public class BookReadingFragment extends BaseFragment implements SwipeRefreshLay
             position=args.getInt("position");
         }
         booksList=new ArrayList<>();
-        String[] strTags= BookApiUtils.getApiTag(position);
+        String[] strTags= BookSourceUtil.getApiTag(position);
         listTag= Arrays.asList(strTags);
         scrollRecycleView();
         idSwiperefreshlayout.setColorSchemeColors(ThemeUtils.getThemeColor());
         idSwiperefreshlayout.setOnRefreshListener(this);
         doubanBookPresenter=new DoubanBookPresenter(getActivity());
-        String tag=BookApiUtils.getRandomTAG(listTag);
+        String tag= BookSourceUtil.getRandomTag(listTag);
 
 
         doubanBookPresenter.searchBookByTag(this,tag,false);
@@ -102,8 +102,8 @@ public class BookReadingFragment extends BaseFragment implements SwipeRefreshLay
 
     @Override
     public void onRefresh() {
-        listTag=Arrays.asList(BookApiUtils.getApiTag(position));
-        String tag=BookApiUtils.getRandomTAG(listTag);
+        listTag=Arrays.asList(BookSourceUtil.getApiTag(position));
+        String tag= BookSourceUtil.getRandomTag(listTag);
         doubanBookPresenter.searchBookByTag(BookReadingFragment.this,tag,false);
         idSwiperefreshlayout.postDelayed(new Runnable() {
 
@@ -145,7 +145,7 @@ public class BookReadingFragment extends BaseFragment implements SwipeRefreshLay
                         new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                String tag=BookApiUtils.getRandomTAG(listTag);
+                                String tag= BookSourceUtil.getRandomTag(listTag);
 
                                 doubanBookPresenter.searchBookByTag(BookReadingFragment.this,tag,true);
                             }

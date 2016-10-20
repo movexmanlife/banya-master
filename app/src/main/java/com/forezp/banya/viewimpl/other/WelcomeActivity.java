@@ -2,10 +2,9 @@ package com.forezp.banya.viewimpl.other;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.animation.PropertyValuesHolder;
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.widget.ImageView;
@@ -16,6 +15,8 @@ import com.forezp.banya.viewimpl.MainActivity;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
+import butterknife.BindArray;
+import butterknife.BindInt;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.Observable;
@@ -23,19 +24,18 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
 /**
- * Created by forezp on 16/10/15.
+ * 欢迎页
  */
-
-
-public class EntryActivity extends Activity
-{
+public class WelcomeActivity extends Activity {
 
     @BindView(R.id.iv_entry)
     ImageView mSplashImage;
-
-    private static final int ANIMATION_TIME = 2000;
-
-    private static final float SCALE_END = 1.13F;
+    @BindInt(R.integer.animationTime)
+    int mAnimationTime;
+    @BindArray(R.array.scaleXValue)
+    String[] mScaleXValue;
+    @BindArray(R.array.scaleYValue)
+    String[] mScaleYValue;
 
     private static final int[] IMAGES = {
             R.drawable.ic_screen_default,
@@ -59,9 +59,7 @@ public class EntryActivity extends Activity
     };
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
-
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_entry);
         ButterKnife.bind(this);
@@ -71,40 +69,34 @@ public class EntryActivity extends Activity
 
         Observable.timer(1000, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<Long>()
-                {
-
+                .subscribe(new Action1<Long>() {
                     @Override
-                    public void call(Long aLong)
-                    {
-
+                    public void call(Long aLong) {
                         startAnim();
                     }
                 });
     }
 
-    private void startAnim()
-    {
+    private void startAnim() {
+        PropertyValuesHolder scaleXHolder = PropertyValuesHolder.ofFloat("scaleX", Float.valueOf(mScaleXValue[0]), Float.valueOf(mScaleXValue[1]));
+        PropertyValuesHolder scaleYHolder = PropertyValuesHolder.ofFloat("scaleY", Float.valueOf(mScaleYValue[0]), Float.valueOf(mScaleYValue[1]));
 
-        ObjectAnimator animatorX = ObjectAnimator.ofFloat(mSplashImage, "scaleX", 1f, SCALE_END);
-        ObjectAnimator animatorY = ObjectAnimator.ofFloat(mSplashImage, "scaleY", 1f, SCALE_END);
-
-        AnimatorSet set = new AnimatorSet();
-        set.setDuration(ANIMATION_TIME).play(animatorX).with(animatorY);
-        set.start();
-
-        set.addListener(new AnimatorListenerAdapter()
-        {
+        ObjectAnimator objAnimator = ObjectAnimator.ofPropertyValuesHolder(mSplashImage, scaleXHolder, scaleYHolder);
+        objAnimator.setDuration(mAnimationTime);
+        objAnimator.addListener(new AnimatorListenerAdapter() {
 
             @Override
-            public void onAnimationEnd(Animator animation)
-            {
-
-                startActivity(new Intent(EntryActivity.this, MainActivity.class));
-                EntryActivity.this.finish();
-                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+            public void onAnimationEnd(Animator animation) {
+                gotoMainActivity();
             }
         });
+        objAnimator.start();
+    }
+
+    private void gotoMainActivity() {
+        MainActivity.start(this);
+        finish();
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 }
 

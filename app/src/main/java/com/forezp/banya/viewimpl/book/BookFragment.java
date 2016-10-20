@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 
 import com.forezp.banya.R;
 import com.forezp.banya.adapter.BookViewpagerAdapter;
-import com.forezp.banya.api.BookApiUtils;
+import com.forezp.banya.utils.BookSourceUtil;
 import com.forezp.banya.base.BaseFragment;
 import com.forezp.banya.utils.ThemeUtils;
 
@@ -65,7 +65,7 @@ public class BookFragment extends BaseFragment implements ViewPager.OnPageChange
     }
     private void initViews(){
 
-        mTitles = BookApiUtils.Tag_Titles;
+        mTitles = BookSourceUtil.TAG_TITLES;
 
 
         // 初始化ViewPager的适配器，并设置给它
