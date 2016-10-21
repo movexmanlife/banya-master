@@ -8,11 +8,15 @@ import android.content.Context;
  */
 public class MyApp extends Application {
     private static final String DB_NAME = "weibo.db";
-    public static Context mContext;
+    public static MyApp mMyApp;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        mContext = getApplicationContext();
+        mMyApp = this;
+    }
+
+    public static MyApp getInstance() {
+        return mMyApp;
     }
 }

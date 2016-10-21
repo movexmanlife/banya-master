@@ -69,6 +69,12 @@ public class FilmDetailActivity extends BaseActivity implements IGetFilmDetail {
     private Context context;
     private String alt;
 
+    public static void start(Context context, String subjectsId) {
+        Intent starter = new Intent(context, FilmDetailActivity.class);
+        starter.putExtra(FilmDetailActivity.EXTRA_ID, subjectsId);
+        context.startActivity(starter);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

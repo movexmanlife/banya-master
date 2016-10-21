@@ -33,7 +33,7 @@ public class ApiRetrofit {
 
     ApiRetrofit() {
         //cache url
-        File httpCacheDirectory = new File(MyApp.mContext.getCacheDir(), "responses");
+        File httpCacheDirectory = new File(MyApp.mMyApp.getCacheDir(), "responses");
         int cacheSize = 10 * 1024 * 1024; // 10 MiB
         Cache cache = new Cache(httpCacheDirectory, cacheSize);
 
@@ -63,14 +63,14 @@ public class ApiRetrofit {
         CacheControl cacheControl = cacheBuilder.build();
 
         Request request = chain.request();
-        if (!NetUtils.checkNetWorkIsAvailable(MyApp.mContext)) {
+        if (!NetUtils.checkNetWorkIsAvailable(MyApp.mMyApp)) {
             request = request.newBuilder()
                     .cacheControl(cacheControl)
                     .build();
 
         }
         Response originalResponse = chain.proceed(request);
-        if (NetUtils.checkNetWorkIsAvailable(MyApp.mContext)) {
+        if (NetUtils.checkNetWorkIsAvailable(MyApp.mMyApp)) {
             int maxAge = 0; // read from cache
             return originalResponse.newBuilder()
                     .removeHeader("Pragma")

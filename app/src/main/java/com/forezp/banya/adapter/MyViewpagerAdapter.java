@@ -7,7 +7,6 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import java.util.List;
 
 /**
- * Created by forezp on 16/8/13.
  */
 public class MyViewpagerAdapter extends FragmentStatePagerAdapter {
 
@@ -20,15 +19,18 @@ public class MyViewpagerAdapter extends FragmentStatePagerAdapter {
         this.mFragments = mFragments;
     }
 
-    @Override public CharSequence getPageTitle(int position) {
+    @Override
+    public CharSequence getPageTitle(int position) {
         return mTitles[position];
     }
 
-    @Override public Fragment getItem(int position) {
+    @Override
+    public Fragment getItem(int position) {
         return mFragments.get(position);
     }
 
-    @Override public int getCount() {
+    @Override
+    public int getCount() {
         return mFragments.size();
     }
 }

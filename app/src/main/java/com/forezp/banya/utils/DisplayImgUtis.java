@@ -11,16 +11,18 @@ import com.bumptech.glide.Glide;
  */
 public class DisplayImgUtis {
     private static DisplayImgUtis instance;
-    private DisplayImgUtis(){}
-    public static DisplayImgUtis getInstance(){
-        if(instance==null){
-            instance =new DisplayImgUtis();
-        }
-        return  instance;
+
+    private DisplayImgUtis() {
     }
 
+    public static DisplayImgUtis getInstance() {
+        if (instance == null) {
+            instance = new DisplayImgUtis();
+        }
+        return instance;
+    }
 
-    public void display(Context context,String url,ImageView imageView){
+    public static void display(Context context, String url, ImageView imageView) {
         Glide.with(context).load(url).into(imageView);
     }
 

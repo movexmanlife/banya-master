@@ -30,6 +30,8 @@ public class Subjects {
 
     private String id;
 
+    private int position;
+
     public Rating getRating() {
         return rating;
     }
@@ -124,5 +126,13 @@ public class Subjects {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public int getPosition() {
+        return position;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
     }
 }

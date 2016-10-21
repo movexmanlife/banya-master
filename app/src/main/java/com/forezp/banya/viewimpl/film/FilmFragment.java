@@ -19,6 +19,8 @@ import com.forezp.banya.utils.ThemeUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindArray;
+import butterknife.BindColor;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -26,7 +28,7 @@ import butterknife.ButterKnife;
 /**
  * Created by forezp on 16/8/13.
  */
-public class FilmFragment extends BaseFragment implements ViewPager.OnPageChangeListener{
+public class FilmFragment extends BaseFragment implements ViewPager.OnPageChangeListener {
 
     @BindView(R.id.tablayout)
     TabLayout tablayout;
@@ -36,19 +38,18 @@ public class FilmFragment extends BaseFragment implements ViewPager.OnPageChange
     ViewPager viewpager;
     @BindView(R.id.coordinatorlayout)
     CoordinatorLayout coordinatorlayout;
-    // TabLayout中的tab标题
-    private String[] mTitles;
-    // 填充到ViewPager中的Fragment
+    @BindArray(R.array.tab_film)
+    String[] mTitles;
+    @BindColor(R.color.text_gray_6)
+    int mTabTextColor;
+
     private List<Fragment> mFragments;
     private FilmLiveFragment filmLiveFragment;
     private FilmTop250Fragment filmTop250Fragment;
-    //private FilmGodFragment filmGodFragment;
     private MyViewpagerAdapter mViewPagerAdapter;
 
     public static FilmFragment newInstance() {
-
         Bundle args = new Bundle();
-
         FilmFragment fragment = new FilmFragment();
         fragment.setArguments(args);
         return fragment;
@@ -77,31 +78,24 @@ public class FilmFragment extends BaseFragment implements ViewPager.OnPageChange
         super.onViewCreated(view, savedInstanceState);
         initViews();
     }
-    private void initViews(){
 
-        mTitles = getResources().getStringArray(R.array.tab_film);
-        //初始化填充到ViewPager中的Fragment集合
+    private void initViews() {
         mFragments = new ArrayList<>();
-        filmLiveFragment=FilmLiveFragment.newInstance();
-        filmTop250Fragment=FilmTop250Fragment.newInstance() ;
-       // filmGodFragment=FilmGodFragment.newInstance();
+        filmLiveFragment = FilmLiveFragment.newInstance();
+        filmTop250Fragment = FilmTop250Fragment.newInstance();
         mFragments.add(filmLiveFragment);
-       // mFragments.add(filmGodFragment);
         mFragments.add(filmTop250Fragment);
 
 
-        // 初始化ViewPager的适配器，并设置给它
         mViewPagerAdapter = new MyViewpagerAdapter(getChildFragmentManager(), mTitles, mFragments);
         viewpager.setAdapter(mViewPagerAdapter);
-        // 设置ViewPager最大缓存的页面个数
         viewpager.setOffscreenPageLimit(3);
-        // 给ViewPager添加页面动态监听器（为了让Toolbar中的Title可以变化相应的Tab的标题）
         viewpager.addOnPageChangeListener(this);
 
         tablayout.setTabGravity(TabLayout.GRAVITY_FILL);
         tablayout.setTabMode(TabLayout.MODE_FIXED);
         tablayout.setSelectedTabIndicatorColor(ThemeUtils.getThemeColor());
-        tablayout.setTabTextColors(getResources().getColor(R.color.text_gray_6),ThemeUtils.getThemeColor());
+        tablayout.setTabTextColors(mTabTextColor, ThemeUtils.getThemeColor());
         // 将TabLayout和ViewPager进行关联，让两者联动起来
         tablayout.setupWithViewPager(viewpager);
         // 设置Tablayout的Tab显示ViewPager的适配器中的getPageTitle函数获取到的标题

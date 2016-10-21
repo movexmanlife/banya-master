@@ -15,7 +15,9 @@ import com.forezp.banya.R;
 import com.forezp.banya.adapter.Top250FilmAdapter;
 import com.forezp.banya.base.BaseFragment;
 import com.forezp.banya.bean.top250.Root;
+import com.forezp.banya.bean.top250.Subjects;
 import com.forezp.banya.utils.ThemeUtils;
+import com.forezp.banya.viewimpl.filmdetail.FilmDetailActivity;
 import com.forezp.banya.viewinterface.film.IgetTop250View;
 
 import butterknife.BindView;
@@ -24,8 +26,7 @@ import butterknife.ButterKnife;
 /**
  * Created by forezp on 16/9/22.
  */
-public class FilmTop250Fragment extends BaseFragment implements IgetTop250View,SwipeRefreshLayout.OnRefreshListener {
-
+public class FilmTop250Fragment extends BaseFragment implements IgetTop250View, SwipeRefreshLayout.OnRefreshListener {
 
     @BindView(R.id.recyclerview)
     RecyclerView recyclerview;
@@ -40,7 +41,7 @@ public class FilmTop250Fragment extends BaseFragment implements IgetTop250View,S
 
     private int lastVisibleItem;
     private int pageCount;
-    private final int PAGE_SIZE=10;
+    private final int PAGE_SIZE = 10;
     private Root mRoot;
 
     public static FilmTop250Fragment newInstance() {
@@ -62,9 +63,9 @@ public class FilmTop250Fragment extends BaseFragment implements IgetTop250View,S
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        doubanFilmPresenter=new DoubanFilmPresenter(getActivity());
+        doubanFilmPresenter = new DoubanFilmPresenter(getActivity());
 
-        doubanFilmPresenter.getTop250(this,pageCount*PAGE_SIZE,PAGE_SIZE,false);
+        doubanFilmPresenter.getTop250(this, pageCount * PAGE_SIZE, PAGE_SIZE, false);
         mLayoutManager = new LinearLayoutManager(getContext());
 
         recyclerview.setLayoutManager(mLayoutManager);
@@ -86,16 +87,21 @@ public class FilmTop250Fragment extends BaseFragment implements IgetTop250View,S
 
     @Override
     public void getTop250Success(Root root, boolean isLoadMore) {
-        if(isLoadMore){
+        if (isLoadMore) {
             mRoot.getSubjects().addAll(root.getSubjects());
             adapter.notifyDataSetChanged();
-        }else {
-            mRoot=root;
+        } else {
+            mRoot = root;
             adapter = new Top250FilmAdapter(getActivity(), mRoot);
             recyclerview.setAdapter(adapter);
         }
         adapter.notifyDataSetChanged();
-
+        adapter.setListener(new Top250FilmAdapter.OnItemClickListener() {
+            @Override
+            public void onSubjectsClick(Subjects subjects) {
+                FilmDetailActivity.start(getActivity(), subjects.getId());
+            }
+        });
     }
 
     @Override
@@ -114,14 +120,14 @@ public class FilmTop250Fragment extends BaseFragment implements IgetTop250View,S
                 if (newState == RecyclerView.SCROLL_STATE_IDLE) {
                     lastVisibleItem = mLayoutManager.findLastVisibleItemPosition();
                     if (mLayoutManager.getItemCount() == 1) {
-                        if(adapter!=null) {
+                        if (adapter != null) {
                             adapter.updateLoadStatus(adapter.LOAD_NONE);
                         }
                         return;
 
                     }
                     if (lastVisibleItem + 1 == mLayoutManager.getItemCount()) {
-                        if(adapter!=null) {
+                        if (adapter != null) {
                             adapter.updateLoadStatus(adapter.LOAD_PULL_TO);
                             // isLoadMore = true;
                             adapter.updateLoadStatus(adapter.LOAD_MORE);
@@ -131,9 +137,9 @@ public class FilmTop250Fragment extends BaseFragment implements IgetTop250View,S
                             @Override
                             public void run() {
                                 pageCount++;
-                                doubanFilmPresenter.getTop250(FilmTop250Fragment.this,pageCount*PAGE_SIZE,PAGE_SIZE,true);
+                                doubanFilmPresenter.getTop250(FilmTop250Fragment.this, pageCount * PAGE_SIZE, PAGE_SIZE, true);
                             }
-                        },1000) ;
+                        }, 1000);
                     }
                 }
             }
@@ -148,7 +154,7 @@ public class FilmTop250Fragment extends BaseFragment implements IgetTop250View,S
 
     @Override
     public void onRefresh() {
-        doubanFilmPresenter.getTop250(this,pageCount*PAGE_SIZE,PAGE_SIZE,false);
+        doubanFilmPresenter.getTop250(this, pageCount * PAGE_SIZE, PAGE_SIZE, false);
         idSwiperefreshlayout.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -156,7 +162,7 @@ public class FilmTop250Fragment extends BaseFragment implements IgetTop250View,S
                     idSwiperefreshlayout.setRefreshing(false);
                 }
             }
-        },2000);
+        }, 2000);
 
     }
 }

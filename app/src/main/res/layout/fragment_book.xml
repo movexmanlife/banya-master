@@ -4,23 +4,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/coordinatorlayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+    android:layout_height="match_parent">
+
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbarlayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <android.support.design.widget.TabLayout
             android:id="@+id/tablayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:tabGravity="fill"
-            app:tabMode="fixed"
-            app:tabTextColor="@color/text_gray_4"
-            app:tabSelectedTextColor="@color/red_base"
             android:background="@color/white"
+            app:tabGravity="fill"
             app:tabIndicatorColor="@color/red_base"
-            />
+            app:tabMode="fixed"
+            app:tabSelectedTextColor="@color/red_base"
+            app:tabTextColor="@color/text_gray_4" />
 
     </android.support.design.widget.AppBarLayout>
 
@@ -28,6 +28,5 @@
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        />
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 </android.support.design.widget.CoordinatorLayout>
