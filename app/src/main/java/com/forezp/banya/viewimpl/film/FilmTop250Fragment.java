@@ -14,6 +14,7 @@ import com.forezp.banya.Presenter.DoubanFilmPresenter;
 import com.forezp.banya.R;
 import com.forezp.banya.adapter.Top250FilmAdapter;
 import com.forezp.banya.base.BaseFragment;
+import com.forezp.banya.bean.LoadMoreData;
 import com.forezp.banya.bean.top250.Root;
 import com.forezp.banya.bean.top250.Subjects;
 import com.forezp.banya.utils.ThemeUtils;
@@ -121,16 +122,16 @@ public class FilmTop250Fragment extends BaseFragment implements IgetTop250View, 
                     lastVisibleItem = mLayoutManager.findLastVisibleItemPosition();
                     if (mLayoutManager.getItemCount() == 1) {
                         if (adapter != null) {
-                            adapter.updateLoadStatus(adapter.LOAD_NONE);
+                            adapter.updateLoadStatus(LoadMoreData.LOAD_NONE);
                         }
                         return;
 
                     }
                     if (lastVisibleItem + 1 == mLayoutManager.getItemCount()) {
                         if (adapter != null) {
-                            adapter.updateLoadStatus(adapter.LOAD_PULL_TO);
+                            adapter.updateLoadStatus(LoadMoreData.LOAD_PULL_TO);
                             // isLoadMore = true;
-                            adapter.updateLoadStatus(adapter.LOAD_MORE);
+                            adapter.updateLoadStatus(LoadMoreData.LOAD_MORE);
                         }
                         //new Handler().postDelayed(() -> getBeforeNews(time), 1000);
                         new Handler().postDelayed(new Runnable() {

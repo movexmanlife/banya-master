@@ -1,35 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <data>
+
+        <import
+            alias="LoadMoreFooterBindUtil"
+            type="com.forezp.banya.binding.LoadMoreFooterBindUtil" />
+        <import
+            alias="LoadMoreData"
+            type="com.forezp.banya.bean.LoadMoreData" />
+        <import type="android.view.View" />
+        <import type="java.lang.String" />
+
+        <variable
+            name="loadData"
+            type="com.forezp.banya.bean.LoadMoreData" />
+    </data>
+
     <LinearLayout
-        android:background="@color/bg_light_gray"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_width="match_parent"
+        android:background="@color/bg_light_gray"
         android:orientation="vertical"
         android:paddingBottom="5dp"
-        android:paddingTop="5dp">
+        android:paddingTop="5dp"
+        android:visibility="@{loadData.loadStatus==LoadMoreData.LOAD_END?View.VISIBLE:View.GONE}">
 
         <LinearLayout
-            android:gravity="center_vertical"
-            android:layout_gravity="center_horizontal"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <ProgressBar
                 android:id="@+id/progress"
-                android:layout_gravity="center"
+                android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:layout_width="20dp" />
+                android:visibility="@{LoadMoreFooterBindUtil.isLoadProgress(loadData)?View.VISIBLE:View.GONE}"
+                android:layout_gravity="center" />
 
             <TextView
                 android:id="@+id/tv_load_prompt"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:layout_width="wrap_content"
-                android:text="加载更多..."
+                android:text="@{LoadMoreFooterBindUtil.getLoadMsg(loadData)}"
                 android:textSize="12sp" />
         </LinearLayout>
 
